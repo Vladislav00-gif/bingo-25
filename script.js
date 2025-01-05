@@ -640,7 +640,7 @@ document.getElementById("resetGame").addEventListener("click", () => {
 });
 
 // Update the color picker functionality
-document.getElementById("colorPicker").addEventListener("dblclick", (event) => {
+document.getElementById("colorPicker").addEventListener("input", (event) => {
   const color = event.target.value;
   const selectedCell = document.querySelector(".bingo-cell:focus") || document.activeElement;
   
@@ -650,7 +650,7 @@ document.getElementById("colorPicker").addEventListener("dblclick", (event) => {
   }
 });
 
-// Add focus handler for cells
+// Make cells focusable when clicked in edit mode
 document.querySelector(".bingo-board").addEventListener("click", (event) => {
   if (state.isEditMode && event.target.classList.contains("bingo-cell")) {
     event.target.focus();
@@ -829,5 +829,23 @@ function makeDroppable(cell) {
 document.addEventListener("DOMContentLoaded", () => {
   const colorPicker = document.getElementById("colorPicker");
   colorPicker.setAttribute("draggable", "true");
+});
+
+// Add color application functionality
+document.getElementById("applyColor").addEventListener("click", () => {
+  if (state.isEditMode) {
+    const selection = window.getSelection();
+    const selectedCell = selection.anchorNode?.parentElement;
+    
+    if (selectedCell?.classList.contains("bingo-cell") && !selection.isCollapsed) {
+      const color = document.getElementById("colorPicker").value;
+      const range = selection.getRangeAt(0);
+      const span = document.createElement('span');
+      span.style.color = color;
+      
+      range.surroundContents(span);
+      saveGoals();
+    }
+  }
 });
 
