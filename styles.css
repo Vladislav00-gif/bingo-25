@@ -148,8 +148,8 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  padding: 10px;
+  gap: 8px;
+  padding: 8px 12px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   backdrop-filter: blur(5px);
@@ -161,7 +161,7 @@ button:hover {
 }
 
 .color-picker input[type="color"] {
-  width: 50px;
+  width: 40px;
   height: 30px;
   padding: 0;
   border: none;
@@ -789,4 +789,120 @@ button {
   box-shadow: 0 0 20px var(--shadow-color);
   outline: 2px dashed var(--text-color);
   outline-offset: -2px;
+}
+
+/* Update color picker and button styles */
+.color-picker {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.color-btn {
+  padding: 6px 12px !important;
+  font-size: 0.85rem !important;
+  min-width: 60px;
+  height: 30px;
+  background: var(--button-gradient) !important;
+  border: none !important;
+  border-radius: 15px !important;
+  color: var(--text-color);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.color-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1);
+}
+
+.color-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Make color picker more compact */
+.color-picker input[type="color"] {
+  width: 40px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+}
+
+/* Add tooltip styles */
+.color-picker-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-picker-wrapper::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  animation: showHideTooltip 5s ease forwards;
+}
+
+.color-picker-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.8);
+  margin-bottom: -4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  animation: showHideTooltip 5s ease forwards;
+}
+
+/* Add animation keyframes */
+@keyframes showHideTooltip {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+}
+
+/* Remove hover styles since we're using animation */
+.color-picker-wrapper:hover::before,
+.color-picker-wrapper:hover::after {
+  opacity: 0;
 }
