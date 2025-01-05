@@ -413,6 +413,8 @@ function createBingoBoard() {
   const cell = document.createElement("div");
   cell.className = "bingo-cell";
   cell.contentEditable = "false";
+  cell.setAttribute('role', 'textbox');
+  cell.setAttribute('aria-multiline', 'true');
   
   for (let i = 0; i < 25; i++) {
     const newCell = cell.cloneNode(true);
@@ -764,6 +766,22 @@ window.addEventListener('load', () => {
       .catch(err => {
         console.log('ServiceWorker registration failed: ', err);
       });
+  }
+});
+
+// Add this to handle Enter key in edit mode
+document.addEventListener('keydown', (e) => {
+  if (state.isEditMode && e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const br = document.createElement('br');
+    range.deleteContents();
+    range.insertNode(br);
+    range.setStartAfter(br);
+    range.setEndAfter(br);
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
 });
 
