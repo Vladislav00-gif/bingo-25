@@ -167,8 +167,7 @@ button:hover {
   border: none;
   border-radius: 5px;
   background: none;
-  cursor: grab;
-  transition: transform 0.2s ease;
+  cursor: pointer;
 }
 
 .color-picker input[type="color"]:active {
@@ -312,8 +311,8 @@ button:hover {
 
 /* Theme-related styles */
 :root 
-    /* Cosmic Theme (Default) - Deep Space */
-  [data-theme="cosmic"] {
+  /* Cosmic Theme (Default) - Deep Space */
+[data-theme="cosmic"] {
   --bg-gradient-1: #1a1f4b;
   --bg-gradient-2: #4a1155;
   --cell-bg: rgba(30, 30, 60, 0.95);
