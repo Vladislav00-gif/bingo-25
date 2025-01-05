@@ -475,3 +475,167 @@ button:hover {
 
 /* Add to head section of HTML */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap");
+
+/* Base responsive adjustments */
+html {
+  font-size: 16px;
+}
+
+/* Responsive container */
+.container {
+  width: 95%;
+  max-width: 900px;
+  padding: 10px 15px;
+}
+
+/* Responsive typography */
+h1 {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  margin-top: -5px;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  padding: 0 10px;
+}
+
+/* Responsive language switcher */
+.language-switcher {
+  gap: 8px;
+  padding: 0 10px;
+}
+
+.lang-btn {
+  padding: 8px 15px;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+/* Responsive theme switcher */
+.theme-switcher {
+  gap: 10px;
+}
+
+.theme-btn {
+  width: clamp(50px, 15vw, 70px);
+  height: clamp(50px, 15vw, 70px);
+}
+
+/* Responsive bingo board */
+.bingo-board {
+  gap: clamp(8px, 2vw, 12px);
+  padding: clamp(10px, 2vw, 15px);
+  margin: 15px auto;
+}
+
+.bingo-cell {
+  padding: clamp(8px, 2vw, 12px);
+  min-height: clamp(60px, 15vw, 90px);
+  font-size: clamp(0.75rem, 2vw, 1rem);
+}
+
+/* Responsive buttons */
+.button-container {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button {
+  padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 25px);
+  font-size: clamp(0.875rem, 2.5vw, 1.1rem);
+}
+
+/* Responsive modal */
+.celebration-content {
+  width: 90%;
+  max-width: 400px;
+  padding: clamp(20px, 5vw, 40px);
+  margin: 20px;
+}
+
+.celebration-content h2 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+}
+
+.achievement-badge {
+  font-size: clamp(2.5rem, 7vw, 3.5rem);
+}
+
+.achievement-text {
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+}
+
+.motivation-text {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+}
+
+/* Media Queries */
+@media screen and (max-width: 480px) {
+  .page-header {
+    padding: 15px 10px 10px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .color-picker {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .language-switcher {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .theme-switcher {
+    margin: 15px 0;
+  }
+
+  .bingo-board {
+    margin: 10px auto;
+  }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  .container {
+    padding: 5px 15px;
+  }
+
+  .page-header {
+    margin-bottom: 15px;
+  }
+
+  .bingo-cell {
+    min-height: clamp(40px, 12vw, 60px);
+  }
+
+  .celebration-content {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Print styles */
+@media print {
+  .bingo-board {
+    page-break-inside: avoid;
+  }
+
+  .theme-switcher,
+  .language-switcher,
+  .button-container {
+    display: none;
+  }
+}
