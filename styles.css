@@ -292,8 +292,9 @@ button:hover {
 }
 
 /* Theme-related styles */
-:root {
+:root 
   /* Cosmic Theme (Default) - Deep Space */
+  [data-theme="cosmic"] {
   --bg-gradient-1: #1a1f4b;
   --bg-gradient-2: #4a1155;
   --cell-bg: rgba(30, 30, 60, 0.95);
@@ -337,8 +338,8 @@ button:hover {
 }
 
 .theme-btn {
-  width: 70px;
-  height: 70px;
+  width: clamp(50px, 15vw, 70px);
+  height: clamp(50px, 15vw, 70px);
   border-radius: 20px;
   padding: 5px;
   background: rgba(255, 255, 255, 0.1);
@@ -749,10 +750,53 @@ button {
 }
 
 .bingo-cell::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
 }
 
 .bingo-cell::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
+}
+
+/* Theme button styles */
+.theme-btn {
+  width: clamp(50px, 15vw, 70px);
+  height: clamp(50px, 15vw, 70px);
+  border-radius: 20px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+/* Theme-specific border colors when active */
+.theme-btn[data-theme="cosmic"].active {
+  border-color: rgba(147, 86, 220, 0.8) !important; /* Cosmic purple */
+}
+
+.theme-btn[data-theme="ocean"].active {
+  border-color: rgba(0, 210, 255, 0.8) !important; /* Ocean blue */
+}
+
+.theme-btn[data-theme="forest"].active {
+  border-color: rgba(86, 171, 47, 0.8) !important; /* Forest green */
+}
+
+/* Theme preview styles with fixed colors */
+.cosmic-preview {
+  background: linear-gradient(135deg, #1a1f4b, #4a1155);
+  box-shadow: 0 0 20px rgba(147, 86, 220, 0.3);
+}
+
+.ocean-preview {
+  background: linear-gradient(135deg, #000046, #1cb5e0);
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+}
+
+.forest-preview {
+  background: linear-gradient(135deg, #093028, #237a57);
+  box-shadow: 0 0 20px rgba(86, 171, 47, 0.3);
 }
