@@ -148,8 +148,8 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
+  gap: 10px;
+  padding: 10px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   backdrop-filter: blur(5px);
@@ -161,13 +161,14 @@ button:hover {
 }
 
 .color-picker input[type="color"] {
-  width: 40px;
+  width: 50px;
   height: 30px;
   padding: 0;
   border: none;
   border-radius: 5px;
   background: none;
-  cursor: pointer;
+  cursor: grab;
+  transition: transform 0.2s ease;
 }
 
 .color-picker input[type="color"]:active {
@@ -311,8 +312,8 @@ button:hover {
 
 /* Theme-related styles */
 :root 
-  /* Cosmic Theme (Default) - Deep Space */
-[data-theme="cosmic"] {
+    /* Cosmic Theme (Default) - Deep Space */
+  [data-theme="cosmic"] {
   --bg-gradient-1: #1a1f4b;
   --bg-gradient-2: #4a1155;
   --cell-bg: rgba(30, 30, 60, 0.95);
@@ -791,118 +792,101 @@ button {
   outline-offset: -2px;
 }
 
-/* Update color picker and button styles */
-.color-picker {
-  margin: 10px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
+/* Progress Bar Styles - Add this after your existing base styles */
+.progress-container {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 600px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  padding: 15px 20px;
+  border-radius: 15px;
   backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.color-btn {
-  padding: 6px 12px !important;
-  font-size: 0.85rem !important;
-  min-width: 60px;
-  height: 30px;
-  background: var(--button-gradient) !important;
-  border: none !important;
-  border-radius: 15px !important;
-  color: var(--text-color);
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.color-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  filter: brightness(1.1);
-}
-
-.color-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Make color picker more compact */
-.color-picker input[type="color"] {
-  width: 40px;
-  height: 30px;
-  padding: 0;
-  border: none;
-  border-radius: 5px;
-  background: none;
-  cursor: pointer;
-}
-
-/* Add tooltip styles */
-.color-picker-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.color-picker-wrapper::before {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  font-size: 0.85rem;
-  border-radius: 6px;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.progress-label {
+  text-align: left;
   margin-bottom: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  animation: showHideTooltip 5s ease forwards;
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.color-picker-wrapper::after {
+#progress-percentage {
+  font-size: 1.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--cell-marked);
+  transition: width 0.5s ease-in-out;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 15px var(--shadow-color);
+}
+
+.progress-fill::after {
   content: "";
   position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: rgba(0, 0, 0, 0.8);
-  margin-bottom: -4px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  animation: showHideTooltip 5s ease forwards;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
 }
 
-/* Add animation keyframes */
-@keyframes showHideTooltip {
-  0%,
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
   100% {
-    opacity: 0;
-  }
-  10%,
-  90% {
-    opacity: 1;
+    transform: translateX(100%);
   }
 }
 
-/* Remove hover styles since we're using animation */
-.color-picker-wrapper:hover::before,
-.color-picker-wrapper:hover::after {
-  opacity: 0;
+/* Add responsive styles for progress bar */
+@media screen and (max-width: 480px) {
+  .progress-container {
+    width: 90%;
+    padding: 12px 15px;
+  }
+
+  .progress-label {
+    font-size: 1rem;
+  }
+
+  #progress-percentage {
+    font-size: 1.1rem;
+  }
+
+  .progress-bar {
+    height: 20px;
+  }
 }
