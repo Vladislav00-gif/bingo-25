@@ -427,8 +427,14 @@ function createBingoBoard() {
 }
 
 function handleCellClick(event) {
-  if (!state.isEditMode) {
-    event.target.classList.toggle("marked");
+  const cell = event.target;
+  
+  if (state.isEditMode) {
+    // In edit mode, focus the cell for editing
+    cell.focus();
+  } else {
+    // In play mode, toggle the marked state
+    cell.classList.toggle("marked");
     saveGoals();
     checkWin();
   }
@@ -503,7 +509,7 @@ function checkWin() {
   if (newWin) {
     requestAnimationFrame(() => showCelebration());
     saveGoals();
-  }
+  }_
 }
 
 // UI Updates and Event Handlers
@@ -593,7 +599,6 @@ document.getElementById("editButton").addEventListener("click", () => {
   const cells = document.querySelectorAll(".bingo-cell");
   cells.forEach(cell => {
     cell.contentEditable = "true";
-    cell.tabIndex = "0";
   });
 });
 
@@ -642,10 +647,20 @@ document.getElementById("resetGame").addEventListener("click", () => {
 // Update the color picker functionality
 document.getElementById("colorPicker").addEventListener("input", (event) => {
   const color = event.target.value;
-  const selectedCell = document.querySelector(".bingo-cell:focus") || document.activeElement;
+  const selection = window.getSelection();
+  const selectedCell = selection.anchorNode?.parentElement;
   
-  if (state.isEditMode && selectedCell && selectedCell.classList.contains("bingo-cell")) {
-    selectedCell.style.color = color;
+  if (state.isEditMode && selectedCell?.classList.contains("bingo-cell")) {
+    if (!selection.isCollapsed) {
+      // If text is selected, only color the selection
+      const range = selection.getRangeAt(0);
+      const span = document.createElement('span');
+      span.style.color = color;
+      range.surroundContents(span);
+    } else {
+      // If no text is selected, color the whole cell
+      selectedCell.style.color = color;
+    }
     saveGoals();
   }
 });
@@ -835,16 +850,54 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("applyColor").addEventListener("click", () => {
   if (state.isEditMode) {
     const selection = window.getSelection();
-    const selectedCell = selection.anchorNode?.parentElement;
+    const range = selection.getRangeAt(0);
+    const color = document.getElementById("colorPicker").value;
     
-    if (selectedCell?.classList.contains("bingo-cell") && !selection.isCollapsed) {
-      const color = document.getElementById("colorPicker").value;
-      const range = selection.getRangeAt(0);
+    // Check if we have a valid selection
+    if (!selection.isCollapsed) {
+      // Create a new span with the selected color
       const span = document.createElement('span');
       span.style.color = color;
       
-      range.surroundContents(span);
+      // If the selection is already within a colored span, update that span's color
+      const parentSpan = range.commonAncestorContainer.parentElement;
+      if (parentSpan.tagName === 'SPAN' && parentSpan.classList.contains("bingo-cell")) {
+        parentSpan.style.color = color;
+      } else if (parentSpan.tagName === 'SPAN') {
+        // Update existing span's color
+        parentSpan.style.color = color;
+      } else {
+        // Wrap new selection in a span
+        try {
+          range.surroundContents(span);
+        } catch (e) {
+          // If surroundContents fails, try a different approach
+          const fragment = range.extractContents();
+          span.appendChild(fragment);
+          range.insertNode(span);
+        }
+      }
+      
+      // Maintain the selection
+      selection.removeAllRanges();
+      selection.addRange(range);
+      
       saveGoals();
+    }
+  }
+});
+
+// Update the color picker input handler for real-time preview
+document.getElementById("colorPicker").addEventListener("input", (event) => {
+  if (state.isEditMode) {
+    const selection = window.getSelection();
+    if (!selection.isCollapsed) {
+      const range = selection.getRangeAt(0);
+      const parentSpan = range.commonAncestorContainer.parentElement;
+      
+      if (parentSpan.tagName === 'SPAN') {
+        parentSpan.style.color = event.target.value;
+      }
     }
   }
 });
